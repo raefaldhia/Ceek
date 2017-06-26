@@ -8,12 +8,12 @@
 #include <Geek.h>
 #include <unistd.h>
 
-Geek_file_SCOPE::Geek_file_SCOPE()
+Geek_file_CLASS::Geek_file_CLASS()
 {
     this->clear();
 }
 
-Geek_file_SCOPE::~Geek_file_SCOPE()
+Geek_file_CLASS::~Geek_file_CLASS()
 {
     if (this->count)
     {
@@ -22,13 +22,13 @@ Geek_file_SCOPE::~Geek_file_SCOPE()
     this->clear();
 }
 
-void Geek_file_SCOPE::clear()
+void Geek_file_CLASS::clear()
 {
     this->path = nullptr;
     this->count = 0;
 }
 
-bool Geek_file_SCOPE::add(const char* source)
+bool Geek_file_CLASS::add(const char* source)
 {
     if (access(source, R_OK) == 0)
     {

@@ -6,11 +6,11 @@
 #ifndef GEEK_FILE_H
 #define GEEK_FILE_H
 
-class Geek_file_SCOPE
+class Geek_file_CLASS
 {
 public:
-    Geek_file_SCOPE();
-    ~Geek_file_SCOPE();
+    Geek_file_CLASS();
+    ~Geek_file_CLASS();
 
     void clear();
 

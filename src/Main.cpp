@@ -5,21 +5,22 @@
 
 #include <Geek.h>
 
-int main(int argc, char const *argv[])
+int main(int argc, char* argv[])
 {
-    while (argc > 1)
+    Geek.option.parse(argc, argv);
+    while (Geek.option.index < argc)
     {
-        --argc;
-
-        if (Geek.file.add(argv[argc]) == false)
+        if (Geek.file.add(argv[Geek.option.index]) == false)
         {
-            Geek.log.error() << "no such file: '" << argv[argc] << "'\n";
+            Geek.log.error << "no such file: '" << argv[argc] << "'\n";
         }
+        Geek.option.index++;
     }
     if (Geek.file.count == 0)
     {
-        Geek.log.error() << "no input files\n";
+        Geek.log.error << "no input files\n";
         Geek.terminate(1);
     }
+
     return 0;
 }

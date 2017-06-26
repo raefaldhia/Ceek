@@ -8,12 +8,18 @@
 
 #include "Geek/File.h"
 #include "Geek/Log.h"
+#include "Geek/Option.h"
 
-class Geek_SCOPE
+class Geek_CLASS
 {
 public:
-    Geek_log_SCOPE log;
-    Geek_file_SCOPE file;
+    Geek_CLASS();
+
+    Geek_file_CLASS file;
+    Geek_log_CLASS log;
+    Geek_option_CLASS option;
+
+    const char* usage;
 
     void terminate(int code);
 } extern Geek;

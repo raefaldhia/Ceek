@@ -6,15 +6,17 @@
 #ifndef GEEK_LOG_H
 #define GEEK_LOG_H
 
+#include "Log/Error.h"
+
 #include <iostream>
 
-class Geek_log_SCOPE
+class Geek_log_CLASS
 {
 public:
-    template<typename T>
-    inline Geek_log_SCOPE& operator<<(const T obj) { std::cout << obj; return *this; }
+    template<typename T> inline
+    Geek_log_CLASS& operator<<(T obj) { std::cout << obj; return *this; }
 
-    Geek_log_SCOPE& error();
+    Geek_log_error_CLASS error;
 };
 
 #endif

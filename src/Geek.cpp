@@ -6,10 +6,20 @@
 #include "Geek.h"
 
 #include <stdlib.h>
+#include <unistd.h>
 
-Geek_SCOPE Geek;
+Geek_CLASS Geek;
 
-void Geek_SCOPE::terminate(int code)
+Geek_CLASS::Geek_CLASS()
+{
+    this->usage =
+        "Usage: geekc [options] file...\n"
+        "Options:\n"
+        "  -h, --help               Display this information.\n"
+        ;
+}
+
+void Geek_CLASS::terminate(int code)
 {
     exit(code);
 }
