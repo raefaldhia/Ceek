@@ -8,34 +8,83 @@
 #include <Geek.h>
 #include <unistd.h>
 
+#include <fstream>
+
+Geek_file__CLASS::Geek_file__CLASS()
+{
+    Geek.file.file.clear();
+}
+
+Geek_file__CLASS::~Geek_file__CLASS()
+{
+    Geek.file.file.clear();
+}
+
+void Geek_file__CLASS::clear()
+{
+    Geek.file.file.path = nullptr;
+}
+
 Geek_file_CLASS::Geek_file_CLASS()
 {
-    this->clear();
+    Geek.file.clear();
 }
 
 Geek_file_CLASS::~Geek_file_CLASS()
 {
-    if (this->count)
-    {
-        free(this->path);
-    }
-    this->clear();
+    Geek.file.clear();
 }
 
 void Geek_file_CLASS::clear()
 {
-    this->path = nullptr;
-    this->count = 0;
+    if (Geek.file.count)
+    {
+        free(Geek.file.path);
+    }
+    Geek.file.count = 0;
+    Geek.file.path = nullptr;
+
+    Geek.file.selection = 0;
 }
 
-bool Geek_file_CLASS::add(const char* source)
+inline Geek_file__CLASS Geek_file_CLASS::operator[](int i)
+{
+    Geek.file.file.path = Geek.file.path[i];
+
+    return Geek.file.file;
+}
+
+
+bool Geek_file_CLASS::add(char* source)
 {
     if (access(source, R_OK) == 0)
     {
-        this->path = (const char**)realloc(this->path, sizeof(const char*) * (this->count + 1));
-        *(this->path + this->count++) = source;
+        Geek.file.count++;
+        Geek.file.path = (char**)realloc(Geek.file.path, Geek.file.count * sizeof(char*));
+        Geek.file.path[Geek.file.count - 1] = source;
 
         return true;
     }
     return false;
+}
+
+void Geek_file_CLASS::process()
+{
+    int id = Geek.file.count;
+    while (id)
+    {
+        id--;
+
+        std::ifstream file;
+        file.open(Geek.file[id].path);
+        if (file.is_open() == false)
+        {
+            Geek.log.error << "no such file: '" << this->path[id] << "'\n";
+            Geek.terminate(1);
+        }
+
+        // TODO: Lexical Analysis
+
+        file.close();
+    }
 }

@@ -4,6 +4,7 @@
  */
 
 #include <Geek.h>
+#include <cstring>
 
 int main(int argc, char* argv[])
 {
@@ -12,15 +13,17 @@ int main(int argc, char* argv[])
     {
         if (Geek.file.add(argv[Geek.option.index]) == false)
         {
-            Geek.log.error << "no such file: '" << argv[argc] << "'\n";
+            Geek.log.error << "no such file: '" << argv[Geek.option.index] << "'\n";
         }
         Geek.option.index++;
     }
+
     if (Geek.file.count == 0)
     {
         Geek.log.error << "no input files\n";
         Geek.terminate(1);
     }
+    Geek.file.process();
 
     return 0;
 }
