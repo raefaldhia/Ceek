@@ -3,23 +3,24 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
-#ifndef GEEK_option_H
-#define GEEK_option_H
+#ifndef GEEK_FILE_FILE_H
+#define GEEK_FILE_FILE_H
 
 namespace GEEK {
 /*----------------------------------------------------------------------------*/
-class Option
-{
-public:
-    Option();
-    ~Option();
+// FILE_ insetead of FILE to prevent compiler error.
+namespace FILE_ {
+    class File
+    {
+    public:
+        File();
+        ~File();
 
-    void clear();
+        void clear();
 
-    int index;
-
-    void parse(int argc, char* argv[]);
-};
+        char* path;
+    };
+}
 /*----------------------------------------------------------------------------*/
 }
 #endif

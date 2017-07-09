@@ -6,17 +6,42 @@
 #ifndef GEEK_LOG_H
 #define GEEK_LOG_H
 
-#include "Log/Error.h"
+#include <ostream>
 
-#include <iostream>
-
-class Geek_log_CLASS
+namespace GEEK {
+/*----------------------------------------------------------------------------*/
+namespace LOG
 {
+    extern std::ostream& log;
+
+    namespace ERROR
+    {
+        class Fatal
+        {
+        public:
+            template<typename T> inline
+            std::ostream& operator<<(T message) { return log << "Geek: fatal error: " << message; }
+        };
+    }
+    class Error
+    {
+        typedef ERROR::Fatal Fatal;
+    public:
+        template<typename T> inline
+        std::ostream& operator<<(T message) { return log << "Geek: error: " << message; }
+
+        Fatal fatal;
+    };
+}
+class Log
+{
+    typedef GEEK::LOG::Error Error;
 public:
     template<typename T> inline
-    Geek_log_CLASS& operator<<(T obj) { std::cout << obj; return *this; }
+    std::ostream& operator<<(T message) { using namespace LOG; return log << message; }
 
-    Geek_log_error_CLASS error;
+    Error error;
 };
-
+/*----------------------------------------------------------------------------*/
+}
 #endif

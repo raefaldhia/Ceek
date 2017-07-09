@@ -12,12 +12,15 @@
 
 class Geek_CLASS
 {
+    typedef GEEK::File File;
+    typedef GEEK::Option Option;
+    typedef GEEK::Log Log;
 public:
     Geek_CLASS();
 
-    Geek_file_CLASS file;
-    Geek_log_CLASS log;
-    Geek_option_CLASS option;
+    File file;
+    Log log;
+    Option option;
 
     const char* usage;
 

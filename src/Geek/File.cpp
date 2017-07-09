@@ -4,87 +4,81 @@
  */
 
 #include "File.h"
+using namespace GEEK;
 
 #include <Geek.h>
 #include <unistd.h>
 
 #include <fstream>
 
-Geek_file__CLASS::Geek_file__CLASS()
-{
-    Geek.file.file.clear();
-}
-
-Geek_file__CLASS::~Geek_file__CLASS()
-{
-    Geek.file.file.clear();
-}
-
-void Geek_file__CLASS::clear()
-{
-    Geek.file.file.path = nullptr;
-}
-
-Geek_file_CLASS::Geek_file_CLASS()
+File::File()
 {
     Geek.file.clear();
 }
 
-Geek_file_CLASS::~Geek_file_CLASS()
+File::~File()
 {
-    Geek.file.clear();
-}
-
-void Geek_file_CLASS::clear()
-{
-    if (Geek.file.count)
+    while (Geek.file.count)
     {
-        free(Geek.file.path);
+        Geek.file.count--;
+        free(Geek.file.files[Geek.file.count]);
     }
-    Geek.file.count = 0;
-    Geek.file.path = nullptr;
 
-    Geek.file.selection = 0;
+    Geek.file.clear();
 }
 
-inline Geek_file__CLASS Geek_file_CLASS::operator[](int i)
+void File::clear()
 {
-    Geek.file.file.path = Geek.file.path[i];
-
-    return Geek.file.file;
+    Geek.file.files = nullptr;
+    Geek.file.count = 0;
 }
 
+File::operator FILE_::File**&()
+{
+    return Geek.file.files;
+}
 
-bool Geek_file_CLASS::add(char* source)
+void File::operator=(FILE_::File** source)
+{
+    Geek.file.files = source;
+}
+
+FILE_::File& File::operator[](int i)
+{
+    return *Geek.file.files[i];
+}
+
+bool File::add(char* source)
 {
     if (access(source, R_OK) == 0)
     {
         Geek.file.count++;
-        Geek.file.path = (char**)realloc(Geek.file.path, Geek.file.count * sizeof(char*));
-        Geek.file.path[Geek.file.count - 1] = source;
+        Geek.file = (FILE_::File**)realloc(Geek.file, Geek.file.count * sizeof(FILE_::File*));
+        Geek.file.files[Geek.file.count - 1] = new FILE_::File();
 
+        Geek.file[Geek.file.count - 1].path = source;
         return true;
     }
     return false;
 }
 
-void Geek_file_CLASS::process()
+void File::process()
 {
-    int id = Geek.file.count;
-    while (id)
+    int index = Geek.file.count;
+    while (index)
     {
-        id--;
+        index--;
 
-        std::ifstream file;
-        file.open(Geek.file[id].path);
-        if (file.is_open() == false)
+        std::ifstream fHandler;
+
+        fHandler.open(Geek.file[index].path);
+        if (fHandler.is_open() == false)
         {
-            Geek.log.error << "no such file: '" << this->path[id] << "'\n";
-            Geek.terminate(1);
+            Geek.log.error << "no such file: '" << Geek.file[index].path << "'\n";
         }
 
-        // TODO: Lexical Analysis
+        // TODO: Lexical Analysis.
 
-        file.close();
+        fHandler.close();
     }
 }

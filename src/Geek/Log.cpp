@@ -4,3 +4,8 @@
  */
 
 #include "Log.h"
+using namespace GEEK::LOG;
+
+#include <iostream>
+
+std::ostream& GEEK::LOG::log = std::cout;

@@ -4,6 +4,7 @@
  */
 
 #include "Option.h"
+using namespace GEEK;
 
 #include <Geek.h>
 #include <getopt.h>
@@ -12,24 +13,25 @@
 #include <iostream>
 #include <ostream>
 
-Geek_option_CLASS::Geek_option_CLASS()
+Option::Option()
 {
-    this->clear();
+    Geek.option.clear();
 }
 
-Geek_option_CLASS::~Geek_option_CLASS()
+Option::~Option()
 {
-    this->clear();
+    Geek.option.clear();
 }
 
-void Geek_option_CLASS::clear()
+void Option::clear()
 {
-    this->index = 1;
-
+    // Disable system message.
     opterr = 0;
+
+    Geek.option.index = 1;
 }
 
-void Geek_option_CLASS::parse(int argc, char* argv[])
+void Option::parse(int argc, char* argv[])
 {
     int option_index = 0;
     const option long_options[] =
@@ -53,7 +55,7 @@ void Geek_option_CLASS::parse(int argc, char* argv[])
            break;
         }
     }
-    this->index = optind;
+    Geek.option.index = optind;
     if (Geek.option.index == argc)
     {
         Geek.log << Geek.usage;

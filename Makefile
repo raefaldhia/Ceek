@@ -11,6 +11,6 @@ SRC = \
 	src/Main.cpp \
 	src/Geek.cpp \
 	src/Geek/File.cpp \
+	src/Geek/File/File.cpp \
 	src/Geek/Log.cpp \
-	src/Geek/Log/Error.cpp \
 	src/Geek/Option.cpp

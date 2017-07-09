@@ -6,39 +6,51 @@
 #ifndef GEEK_FILE_H
 #define GEEK_FILE_H
 
-#include "File/Content.h"
+#include "File/File.h"
 
-class Geek_file__CLASS
-{
+namespace GEEK {
+/*----------------------------------------------------------------------------*/
+typedef GEEK::FILE_::File Geek_file_file_CLASS;
+class File {
 public:
-    Geek_file__CLASS();
-    ~Geek_file__CLASS();
+    File();
+    ~File();
 
     void clear();
 
-    char* path;
-};
+    FILE_::File** files;
+    unsigned int count;
 
+    inline operator FILE_::File**&();
+    inline void operator=(FILE_::File** source);
+    FILE_::File& operator[](int i);
+
+    bool add(char* source);
+    void process();
+};
+/*
 class Geek_file_CLASS
 {
 public:
     Geek_file_CLASS();
     ~Geek_file_CLASS();
 
-    inline Geek_file__CLASS operator[](int i);
-
     void clear();
+
+    inline Geek_file_file_CLASS operator[](int i);
 
     unsigned int count;
     unsigned int selection;
 
     char** path;
+    char*** content;
+    unsigned int* content_count;
 
     bool add(char* source);
-
     void process();
 
-    Geek_file__CLASS file;
-};
-
+    Geek_file_file_CLASS file;
+};*/
+/*----------------------------------------------------------------------------*/
+}
 #endif
